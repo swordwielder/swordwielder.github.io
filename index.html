@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Our Wedding Invitation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Font (optional) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #faf5f5;
+      --primary: #c49c9c;
+      --primary-dark: #a57b7b;
+      --accent: #f0d9d9;
+      --text-main: #3a2b2b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Raleway", system-ui, -apple-system, BlinkMacSystemFont;
+      background: linear-gradient(135deg, #faf5f5, #f9ecec);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    main {
+      width: 100%;
+      max-width: 1100px;
+      padding: 24px 16px 60px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 24px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+      padding: 24px;
+      margin-bottom: 24px;
+      backdrop-filter: blur(8px);
+      animation: fadeInUp 1s ease-out forwards;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    header {
+      text-align: center;
+      padding: 16px 0 8px;
+      animation: fadeIn 1.2s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .title {
+      font-family: "Playfair Display", serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: #7b5c5c;
+    }
+
+    .hero-section {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 16px;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .hero-section {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-text {
+      padding: 16px;
+    }
+
+    .hero-names {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2.2rem, 3.6vw, 3rem);
+      margin-bottom: 12px;
+    }
+
+    .hero-divider {
+      width: 60px;
+      height: 2px;
+      background: var(--primary);
+      margin: 10px 0 16px;
+    }
+
+    .hero-info {
+      font-size: 0.98rem;
+      line-height: 1.6;
+    }
+
+    .hero-info strong {
+      font-weight: 600;
+    }
+
+    .hero-highlight {
+      margin-top: 16px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--primary-dark);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 0.75rem;
+      margin-top: 8px;
+    }
+
+    .hero-badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--primary-dark);
+    }
+
+    /* Slideshow */
+    .slideshow-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+      height: 260px;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1s ease;
+      background-position: center;
+      background-size: cover;
+    }
+
+    .slide.active {
+      opacity: 1;
+    }
+
+    .slide-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.35));
+    }
+
+    .slide-caption {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      right: 14px;
+      color: #fff;
+      font-size: 0.85rem;
+      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .slide-dot-container {
+      display: flex;
+      gap: 6px;
+    }
+
+    .slide-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      background: transparent;
+    }
+
+    .slide-dot.active {
+      background: #fff;
+    }
+
+    .slide-controls {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+    }
+
+    .slide-button {
+      pointer-events: auto;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      margin: 0 8px;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    .slide-button:hover {
+      transform: translateY(-1px);
+      background: #fff;
+    }
+
+    /* Calendar */
+    .calendar-section {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 16px;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .calendar-section {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      text-align: center;
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 12px;
+    }
+
+    .calendar-month {
+      font-family: "Playfair Display", serif;
+      font-size: 1.3rem;
+    }
+
+    .calendar-year {
+      font-size: 0.9rem;
+      color: #7f6e6e;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .calendar-day-name {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #9c8989;
+    }
+
+    .calendar-day {
+      font-size: 0.9rem;
+      padding: 6px 0;
+      border-radius: 999px;
+    }
+
+    .calendar-day.empty {
+      opacity: 0.5;
+    }
+
+    .calendar-day.highlight {
+      background: var(--primary);
+      color: #fff;
+      font-weight: 600;
+      box-shadow: 0 0 0 2px rgba(196, 156, 156, 0.4);
+      transform: scale(1.05);
+    }
+
+    .date-input-box {
+      margin-top: 14px;
+      font-size: 0.85rem;
+    }
+
+    .date-input-box input[type="date"] {
+      margin-top: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #e0c9c9;
+      font-family: inherit;
+    }
+
+    .section-title {
+      font-family: "Playfair Display", serif;
+      font-size: 1.5rem;
+      margin-bottom: 4px;
+    }
+
+    .section-subtitle {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #7f6e6e;
+      margin-bottom: 12px;
+    }
+
+    /* Music toggle */
+    .music-toggle {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      z-index: 20;
+      border: none;
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+
+    .music-toggle:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3);
+      background: var(--primary-dark);
+    }
+
+    .music-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #56ef7f;
+    }
+
+    .music-toggle.paused .music-indicator {
+      background: #f98c8c;
+    }
+
+    .music-note {
+      font-size: 1.1rem;
+    }
+
+    footer {
+      font-size: 0.75rem;
+      text-align: center;
+      padding-bottom: 40px;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <!-- Background music -->
+  <!-- Replace the src with your own music file URL (mp3/ogg) -->
+  <audio id="bg-music" src="https://cdn.pixabay.com/download/audio/2021/09/30/audio_7a9f4784f8.mp3?filename=wedding-background-music-10708.mp3" loop></audio>
+
+  <button id="music-toggle" class="music-toggle paused" type="button">
+    <span class="music-note">♪</span>
+    <span class="music-label">Play Music</span>
+    <span class="music-indicator"></span>
+  </button>
+
+  <main>
+    <header>
+      <div class="title">Wedding Invitation</div>
+      <div class="subtitle">We are getting married</div>
+    </header>
+
+    <!-- Hero / main invite section -->
+    <section class="card hero-section">
+      <div class="hero-text">
+        <div class="hero-names">Qi & Gigi</div>
+        <div class="hero-divider"></div>
+        <div class="hero-info">
+          Together with their families,<br />
+          <strong>Qi Chen</strong> and <strong>Gigi You</strong><br />
+          joyfully invite you to celebrate their wedding.
+          <br /><br />
+          <strong>Date:</strong> Friday, January 23, 2026<br />
+          <strong>Time:</strong> 4:00 PM<br />
+          <strong>Location:</strong> Bamboo Garden  Brooklyn, NY
+        </div>
+        <div class="hero-highlight">
+          Reception & dancing to follow
+        </div>
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          <span>Save the Date • 01 · 23 · 2026</span>
+        </div>
+      </div>
+
+      <!-- Slideshow -->
+      <div class="slideshow-container">
+        <!-- Slides injected via JavaScript -->
+        <div class="slide-controls">
+          <button type="button" class="slide-button" id="prev-slide" aria-label="Previous photo">‹</button>
+          <button type="button" class="slide-button" id="next-slide" aria-label="Next photo">›</button>
+        </div>
+        <div class="slide-caption">
+          <div id="slide-caption-text"></div>
+          <div class="slide-dot-container" id="slide-dots"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calendar section -->
+    <section class="card calendar-section">
+      <div>
+        <div class="section-title">Mark Your Calendar</div>
+        <div class="section-subtitle">Friday, January 23, 2026</div>
+        <p style="font-size: 0.95rem; line-height: 1.6;">
+          We can’t wait to celebrate this special day with you.  
+          Below is a simple calendar view highlighting the wedding date, and a date selector set to
+          <strong>01/23/2026</strong> so you can easily add it to your plans.
+        </p>
+
+        <div class="date-input-box">
+          <div>Wedding Date</div>
+          <!-- HTML date input set to 2026-01-23 -->
+          <input type="date" value="2026-01-23" readonly />
+        </div>
+      </div>
+
+      <div>
+        <div class="calendar-header">
+          <div class="calendar-month">January</div>
+          <div class="calendar-year">2026</div>
+        </div>
+        <div class="calendar-grid" id="calendar-grid">
+          <!-- Calendar created via JS so the highlighted day is easy to change if needed -->
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      With love, Qi &amp; Gigi
+    </footer>
+  </main>
+
+  <script>
+    /***********************
+     * PHOTO SLIDESHOW
+     ***********************/
+
+    // Put your photo URLs + captions here:
+    const slidesData = [
+      {
+        url: "https://images.pexels.com/photos/169211/pexels-photo-169211.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        caption: "From the moment we said hello."
+      },
+      {
+        url: "https://images.pexels.com/photos/2959192/pexels-photo-2959192.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        caption: "A lifetime of adventures awaits."
+      },
+      {
+        url: "https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        caption: "Surrounded by friends, family, and love."
+      }
+    ];
+
+    const slideshowContainer = document.querySelector(".slideshow-container");
+    const captionTextEl = document.getElementById("slide-caption-text");
+    const dotsContainer = document.getElementById("slide-dots");
+    let currentSlideIndex = 0;
+    let slideIntervalId = null;
+
+    function buildSlides() {
+      slidesData.forEach((slide, index) => {
+        const slideEl = document.createElement("div");
+        slideEl.className = "slide";
+        slideEl.style.backgroundImage = `url('${slide.url}')`;
+        if (index === 0) slideEl.classList.add("active");
+
+        const overlay = document.createElement("div");
+        overlay.className = "slide-overlay";
+        slideEl.appendChild(overlay);
+
+        slideshowContainer.appendChild(slideEl);
+      });
+
+      // Dots
+      slidesData.forEach((_, index) => {
+        const dot = document.createElement("div");
+        dot.className = "slide-dot" + (index === 0 ? " active" : "");
+        dot.dataset.index = index;
+        dot.addEventListener("click", () => goToSlide(index));
+        dotsContainer.appendChild(dot);
+      });
+
+      updateCaption();
+    }
+
+    function updateCaption() {
+      captionTextEl.textContent = slidesData[currentSlideIndex].caption;
+      const dots = dotsContainer.querySelectorAll(".slide-dot");
+      dots.forEach((dot, i) => {
+        dot.classList.toggle("active", i === currentSlideIndex);
+      });
+    }
+
+    function goToSlide(index) {
+      const slides = slideshowContainer.querySelectorAll(".slide");
+      if (!slides.length) return;
+
+      slides[currentSlideIndex].classList.remove("active");
+      currentSlideIndex = (index + slidesData.length) % slidesData.length;
+      slides[currentSlideIndex].classList.add("active");
+      updateCaption();
+    }
+
+    function nextSlide() {
+      goToSlide(currentSlideIndex + 1);
+    }
+
+    function prevSlide() {
+      goToSlide(currentSlideIndex - 1);
+    }
+
+    function startAutoSlide() {
+      stopAutoSlide();
+      slideIntervalId = setInterval(nextSlide, 5000); // 5 seconds
+    }
+
+    function stopAutoSlide() {
+      if (slideIntervalId) {
+        clearInterval(slideIntervalId);
+        slideIntervalId = null;
+      }
+    }
+
+    document.getElementById("next-slide").addEventListener("click", () => {
+      nextSlide();
+      startAutoSlide();
+    });
+
+    document.getElementById("prev-slide").addEventListener("click", () => {
+      prevSlide();
+      startAutoSlide();
+    });
+
+    /***********************
+     * CALENDAR (January 2026)
+     ***********************/
+    function buildCalendar() {
+      const calendarGrid = document.getElementById("calendar-grid");
+      const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      const year = 2026;
+      const monthIndex = 0; // January = 0
+      const highlightDay = 23;
+
+      // Day names
+      daysOfWeek.forEach((dayName) => {
+        const el = document.createElement("div");
+        el.className = "calendar-day-name";
+        el.textContent = dayName;
+        calendarGrid.appendChild(el);
+      });
+
+      const firstDay = new Date(year, monthIndex, 1).getDay(); // 0-6
+      const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
+
+      // Leading empty cells
+      for (let i = 0; i < firstDay; i++) {
+        const emptyCell = document.createElement("div");
+        emptyCell.className = "calendar-day empty";
+        calendarGrid.appendChild(emptyCell);
+      }
+
+      // Actual days
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dayEl = document.createElement("div");
+        dayEl.className = "calendar-day";
+        dayEl.textContent = day;
+
+        if (day === highlightDay) {
+          dayEl.classList.add("highlight");
+        }
+
+        calendarGrid.appendChild(dayEl);
+      }
+    }
+
+    /***********************
+     * MUSIC AUTOPLAY + TOGGLE
+     ***********************/
+    const bgMusic = document.getElementById("bg-music");
+    const musicToggle = document.getElementById("music-toggle");
+    const musicLabel = musicToggle.querySelector(".music-label");
+
+    async function tryAutoplay() {
+      // Many browsers block autoplay with sound unless user interacts.
+      // This will try, and if it fails, the button will stay "Play Music".
+      try {
+        await bgMusic.play();
+        musicToggle.classList.remove("paused");
+        musicLabel.textContent = "Pause Music";
+      } catch (err) {
+        // Autoplay blocked - user needs to click the button.
+        musicToggle.classList.add("paused");
+        musicLabel.textContent = "Play Music";
+      }
+    }
+
+    musicToggle.addEventListener("click", () => {
+      if (bgMusic.paused) {
+        bgMusic.play();
+        musicToggle.classList.remove("paused");
+        musicLabel.textContent = "Pause Music";
+      } else {
+        bgMusic.pause();
+        musicToggle.classList.add("paused");
+        musicLabel.textContent = "Play Music";
+      }
+    });
+
+    /***********************
+     * INIT
+     ***********************/
+    document.addEventListener("DOMContentLoaded", () => {
+      buildSlides();
+      buildCalendar();
+      startAutoSlide();
+      tryAutoplay();
+    });
+  </script>
+</body>
+</html>
